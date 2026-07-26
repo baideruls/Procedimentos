@@ -1,52 +1,116 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-	<head>
-		<title>Procedimentos</title>
-		<meta name="description" content="Tutoriais sobre programação para jogos em diversas linguagens de programação. Desenvolvimento de software a partir da programação.">
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width">
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
-		<style>
-body{font-family:"Open Sans";letter-spacing:1px;background-color:#fafafa;color:#262626;margin:0px;}
-a{color:#5c5c5c;cursor:pointer;text-decoration:none;font-weight:bold;}
-b{color:#000000;}
-h1{background-color:#5c5c5c;padding:30px;font-size:34px;letter-spacing:4px;user-select:none;margin-top:0px;}
-h1 span,footer span{display:block;color:#ffffff;font-family:Courier;}
-h2{background-color:#e2e2e2;font-size:18px;padding:14px;color:#5c5c5c;border-radius:8px 0px 0px 0px;border-bottom:12px double #ffffff;margin-bottom:10px;}
-h3{padding:12px;color:#ffffff;background-color:#5c5c5c;}
+<head>
+<title>Procedimentos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap" />
+<meta name="description" content="Tutoriais sobre programação para jogos em diversas linguagens de programação. Desenvolvimento de software a partir da programação.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<style>
+body{font-family:Inter;background:#171717;color:#bebebe;margin:20px;}
+header{background:#262626;cursor:pointer;border-radius:6px;padding:12px 32px 24px;}
+h1{margin:22px 0px -10px 0px;color:#bebebe;}
+p{color:#facc15;}
+.badge{background:#303030;padding:8px;border-radius:6px;font-size:12px;font-family:Courier;line-height:30px;}
+.card{width:300px;margin-right:20px;margin-bottom:20px;display:inline-block;vertical-align:top;}
+.card p{text-align:left;padding-bottom:14px;color:#94a3b8;}
+.links{text-align:right;}
+.links a{text-decoration:none;color:#a3e635;padding:8px 12px;border-radius:6px;border:1px solid #a3e635;font-family:Courier;}
+.title{text-align:left;font-size:20px;padding-bottom:8px;display:flex;align-items:center;cursor:pointer;border-bottom:1px solid #334155;color:#facc15;}
+#main{padding-left:20px;padding-right:20px;}
+article{border-radius:6px;background:#262626;border-radius:12px;padding:20px;}
+a{cursor:pointer;color:#38bdf8;font-weight:bold;text-decoration:none;background:38bdf8;border:1px solid #334155;padding:3px 8px;border-radius:6px;}
+b{color:#facc15;font-size:18px;}
+h3{border-left:6px dashed #a3e635;color:#a3e635;padding-left:8px;font-size:24px;}
 li{margin-left:30px;}
-main{min-height:400px;animation:wideopen 1s;padding:0px 20px;}
-footer{text-align:right;padding:12px;color:#ffffff;background-color:#5c5c5c;margin-top:24px;}
 small{float:right;color:#5c5c5c;cursor:pointer;padding:0px 6px 6px;}
-.imagem{width:100%;max-width:500px;cursor:pointer;border:2px solid #5c5c5c;border-radius:6px;filter:grayscale(100%);}
-.imagem:hover{transform:translateY(-4px);border-color:#5c5c5c;filter:grayscale(100%);}
-img{filter:grayscale(100%);}
-.subtitulo{color:#404040;font-weight:bold;margin-bottom:8px;margin-top:10px;line-height:26px;}
-@keyframes wideopen{from{transform:rotateX(90deg);}to{transform:rotateX(0deg);}}
-		</style>
-		<link href="prism.css" rel="stylesheet">
-	</head>
+.imagem{width:100%;max-width:500px;cursor:pointer;}
+@keyframes pisca{0%{opacity:1;}1%{opacity:0.5;}2%{opacity:1;}
+}
+</style>
+<link href="prism.css" rel="stylesheet">
+</head>
 
-	<body>
-		<h1>
-			<a onclick="location.href='index.html'+(location.href.split('=')[1]?'':'?tutorial='+(parseInt(Math.random()*19)));">
-				<span>Procedimentos</span>
-			</a>
-		</h1>
-		<main></main>
-		<footer>
-			<a href="https://github.com/baideruls/Procedimentos">
-				<span>source-code repo</span>
-			</a>
-		</footer>
-	</body>
+<body onhashchange="main();">
+    <header onclick="location.href='index.html';">
+        <h1 onclick="if(location.hash=='')listacategorias('todos');else location.hash='';">Procedimentos</h1>
+        <p>Desenvolvimento de Software Passo-a-Passo</p>
+    </header><br>
 
-	<script>
-		tutorial = location.href.split("=")[1];
-		if (tutorial) {
-			etapas = [];
+    <div id="main"></div>
+	<h1>
+		<a</a>
+	</h1>
+	<main></main>
+	<article>
+		<a href="https://github.com/baideruls/Procedimentos">
+			<span>source-code repo</span>
+		</a>
+	</article>
+</body>
+
+<script>
+procedimentos=[];
+etapas=[];
+
+function main(){
+	procedimento=parseInt(location.hash.substring(1));
+	if(!(procedimento>-1&&procedimento<procedimentos.length))procedimento=-1;
+	if(procedimento==-1)listacategorias('todos'); //tela menu
+	else{ //tela detalhes
+		scrollTo(0,0);
+		conteudo='';
+		for(x=0;x<etapas[procedimento].length;x++)conteudo+=etapas[procedimento][x].replace("<h2>","<article><div class=title><span class=badge>"+(x*10+parseInt(Math.random()*10))+"."+parseInt(Math.random()*10)+"</span>&nbsp;").replace("</h2>","</div><br>")+"</article><br>";
+		conteudo+="<article><div class=title><span class=badge>"+(x*10+parseInt(Math.random()*10))+"."+parseInt(Math.random()*10)+"</span> &nbsp; Deixe Comentários</div><br><div id=disqus_thread></div></article><br>";
+		document.getElementsByTagName("main")[0].innerHTML=conteudo;
+		disqus_config=function(){
+			this.page.url=location.href;
+			this.page.identifier=location.href;
+		};
+		Prism.highlightAll();
+		s=document.createElement('script');
+		s.src='https://tutoriais-procedimentos.disqus.com/embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(document.head||document.body).appendChild(s);
+	}
+}
+function listacategorias(c){
+	conteudo='';
+	conteudo+="<div class=links><a onclick=\"listacategorias('w');\">web</a> &nbsp; <a onclick=\"listacategorias('d');\">desktop</a> &nbsp; <a onclick=\"listacategorias('m');\">mobile</a></div><br><br>";
+	for(x=0;x<procedimentos.length;x++)if(c=="todos"||procedimentos[x][6]==c)if(x!=17)conteudo+=cardprocedimento(x);
+	conteudo+="<h3>Informação Adicional Extra</h3>";
+	conteudo+=cardprocedimento(17);
+	conteudo+="<article onclick=\"window.open('https://baideruls.github.io/Perceptron','_blank');\" class='card'><div class=title>Como programar uma i.a. desde o zero</div><br><span class=badge>Tutorial Externo</span><br><br><a> * Inteligência Artficial</a><br><br>Um tutorial sobre machine learning onde conceitos chaves da inteligência artificial são apresentados<br><br><div class=links><a>Conheça a Base</a></div></article>";
+	conteudo+="<h3>Advertising</h3>";
+	conteudo+="<iframe src=https://baideruls.github.io/baiderulsads/baiderulsads.html style='width:326px;height:306px;border:none;'></iframe>";
+	document.getElementsByTagName("main")[0].innerHTML=conteudo;
+}
+animacao=0;
+function cardprocedimento(x){return "<article style='animation:pisca 7s "+(animacao++%7)+"s infinite;' onclick=\"location.hash='"+x+"';\" class='"+procedimentos[x][6]+" card'><div class=title>"+procedimentos[x][0]+"</div><br><span class=badge>Linguagem "+procedimentos[x][2]+"</span><br><br><a> * "+procedimentos[x][4]+"</a><br><br>"+procedimentos[x][5]+"<br><br><div class=links><a>"+procedimentos[x][3]+"</a> &nbsp; <a>"+procedimentos[x][1]+"</a></div></article>";}
+
+// --- db.js
+procedimentos=[
+["Joe Jumper","Desktop","C","Iniciantes","Programação Joguinho Simples","Programando um jogo com a linguagem C. Comandos setvideomode() dos-like dos.h dos.c sleep() setcolor()","d"],
+["Zombie Waves","Mobile","Java","Intermediários","Tutorial Jogo de Celular","Como programar um jogo para android com a linguagem Java. Comandos 'extends View()' onTouchEvent() onDraw() onSizeChanged() TimerTask()","m"],
+["Xadrez","Browser","Javascript","Avançados","Tutorial Xadrez em Javascript","Como programar um jogo de xadrez com a linguagem javascript","w"],
+["Database","Servidores","Php","Intermediários","Tutorial Banco de Dados","Como iniciar com php e mysql. Comandos básicos de php. Criando uma base de dados mysql com xampp","w"],
+["Campo Minado","Mobile","Java","Intermediários","Tutorial Jogo de Celular","Como programar um jogo de celular. Programação javascript e java. Usando uma webview","m"],
+["Jogo de Corrida","Desktop","Javascript","Avançados","Tutorial Jogo em Javascript","Como programar um jogo com javascript. Um jogo de corrida no canvas. Como usar setTimeout e context.rotate()","d"],
+["Stylish-Gen","Front End","CSS - JS","Iniciantes","Tutorial Stylish-Gen","Tutorial que mostra como programar uma página simples que gera estilos aleatórios para frases que o usuário digita","w"],
+["Breakout","Browser","Javascript","Intermediários","Tutorial Breakout Js","Tutorial programação javascript. Jogo breakout. Arrays. Jogo. Como criar um joguinho em javascript com a tag canvas","w"],
+["Square Motor","Mobile","Kotlin","Avançados","Tutorial Square Motor","Tutorial sobre programação mobile android. Um jogo de corrida programado com a linguagem kotlin","m"],
+["Site Simples","Web","HTML","Iniciantes","Tutorial como criar um site","Tutorial sobre como escrever código html. Criando uma simples página","w"],
+["Endless Runner","Desktop","Python","Iniciantes","Tutorial Endless Runner","Tutorial sobre como programar um joguinho com python. Um joguinho simples","d"],
+["Snake","Desktop","C","Avançados","Tutorial jogo Cobrinha","Como programar o jogo da cobrinha com a linguagem C usando o Dev-C++","d"],
+["Rocket Attack","Desktop","hta","Avançados","Tutorial desenvolvimento de um joguinho de corrida de Naves","Como programar um jogo para windows. Jogo de corrida com javascript. Arquivo no formato hta","d"],
+["Screenshot","Mobile","Java","Intermediários","Tutorial Screenshot Android","Como desenvolver um aplicativo que tira screenshot e salva com png. Programação Android com java","m"],
+["Shuffle Faces","Desktop","hta","Intermediários","Tutorial joguinho de encontrar","Programação de joguinho para windows. Arquivo executável com código javascript. Como programar um arquivo hta","d"],
+["Harry Leap","Mobile","Java","Intermediários","Como programar um jogo utilizando o celular","Tutorial que mostra como fazer um game programando pelo celular","m"],
+["Números Primos","Web","Javascript","Iniciantes","Calculando números primos com javascript","Tutorial sobre programação javascript. Como calcular números primos","w"],
+["Armazenamento","Desktop","Textos e Imagens","Iniciantes","Como o computador armazena","Explicação detalhada de como os computadores armazenam informações","e"],
+["Site Instalável","Desktop","PWA","Iniciantes","Progressive Web Application","Como programar e publicar uma PWA","d"],
+["Everywhere","Desktop","hta","Intermediários","Jogo de desviar dos objetos que aparecem na tela","Usando javascript html e css para programar um joguinho que funciona em computadores com windows","d"],
+["Empurrador de Caixas","Desktop","C","Avançados","Tutorial sobre como programar no software Poly","Comandos e conceitos básicos sobre desenvolvimento de games","d"]];
 etapas[0]=[`<h2>Programar Jogo na Linguagem C</h2>Esse tutorial é indicado para iniciantes.<br><br>O tutorial mostra passo-a-passo como desenvolver um joguinho simples.<br><br><img class=imagem src=res/0/ss7.png onclick="window.open(this.src,'_blank');"><br><br>O foco do tutorial é escrita de código, mas além disso também é necessário instalar um compilador.`,
 `<h2>Download do Compilador</h2><a href=res/0/Tutorial.zip>Esse arquivo</a> contém o compilador.<br><br>Compilador é um software que recebe código-fonte e transforma em arquivo executável.<br><br>Baixe o compilador e extraia a pasta 'Tutorial' para a área de trabalho.`,
 `<h2>Começando a Escrever</h2>Para ver como compilar abra o bloco de notas e digite:<pre><code class="language-c">hello world</code></pre>Salve o arquivo na pasta 'Tutorial'<br><br>Clique em "Arquivo -> Salvar Como"<br><br>Dê o nome "jogo.c" para o arquivo.<br><br>No campo "Tipo" selecione a opção "Todos os Arquivos"<br><br><img class=imagem src=res/0/ss1.png onclick="window.open(this.src,'_blank');"><br><br>Com isso a gente já criou o arquivo que vai conter o código-fonte que o compilador vai transformar em executável.<br><br>Mas por enquanto o conteúdo do arquivo ainda não é código-fonte.<br><br>A linguagem C tem umas regras que esse tutorial vai explicar.`,
@@ -264,7 +328,7 @@ etapas[19]=[`<h2>Everywhere</h2>Esse é um joguinho que funciona em computadores
 `<h2>Arrays de Atributos dos Oponentes</h2><pre><code class="language-javascript">QUANTOS=6; //quantidade de oponenetes<br><br>\n\n// essas &lt;img> vao conter os oponentes<br>\nfor(i=0;i&lt;QUANTOS;i++)document.body.innerHTML+="&lt;img id=oponent"+i+" style='position:absolute;'>";<br><br>\n\nfigura=[]; //array de imagens dos oponentes<br>\nsentido=[]; //array das direcoes em que os oponentes se movem<br>\ntamanho=[]; //array com os tamanhos dos oponentes na tela<br>\nposicao=[]; //array com coordenadas de cada oponente<br>\ndeslocamento=[]; //array das velocidades do deslocamento dos oponentes<br>\nfunction initOponent(i){ //inicializa oponente<br>\n	figura[i]=["bee","block","fish","fish2","saw"][parseInt(Math.random()*5)]; //aparencia aleatoria<br>\n	sentido[i]=["cima","baixo","esquerda","direita"][parseInt(Math.random()*4)]; //direcao aleatoria<br>\n	tamanho[i]=60+parseInt(Math.random()*70); //tamanho aleatorio<br>\n<br>\n	//posicao aleatoria do oponente<br>\n	if(sentido[i]=="cima")posicao[i]=[0-parseInt(Math.random()*200),50+parseInt(Math.random()*600)];<br>\n	if(sentido[i]=="direita")posicao[i]=[50+parseInt(Math.random()*600),700+parseInt(Math.random()*200)];<br>\n	if(sentido[i]=="baixo")posicao[i]=[700+parseInt(Math.random()*200),50+parseInt(Math.random()*600)];<br>\n	if(sentido[i]=="esquerda")posicao[i]=[50+parseInt(Math.random()*600),0-parseInt(Math.random()*200)];<br>\n<br>\n	//velocidade aleatoria do oponente<br>\n	if(sentido[i]=="cima")deslocamento[i]=[3+parseInt(Math.random()*3),0];<br>\n	if(sentido[i]=="direita")deslocamento[i]=[0,-3-parseInt(Math.random()*3)];<br>\n	if(sentido[i]=="baixo")deslocamento[i]=[-3-parseInt(Math.random()*3),0];<br>\n	if(sentido[i]=="esquerda")deslocamento[i]=[0,3+parseInt(Math.random()*3)];<br>\n<br>\n	//adiciona oponente na DOM (Document Object Model)<br>\n	document.getElementById('oponent'+i).src="imagens/"+sentido[i]+"/"+figura[i]+".png";<br>\n	document.getElementById('oponent'+i).style.width=tamanho[i]+"px";<br>\n}<br>\nfor(i=0;i&lt;QUANTOS;i++)initOponent(i); //inicializa todos os oponentes iniciais<br>\nfunction gameLoop(){<br>\n	colisao=false;<br>\n	for(i=0;i&lt;QUANTOS;i++){ //loop de 'gerenciamento' dos 'oponentes'<br>\n		//se o oponente tá longe do fim da tela entao gera 'outro' oponente aleatorio<br>\n		if(posicao[i][0]&lt;-200||posicao[i][0]>900||posicao[i][1]&lt;-200||posicao[i][1]>900)initOponent(i);<br>\n<br>\n		//calcula posicao do oponente na tela<br>\n		posicao[i][0]+=deslocamento[i][0];<br>\n		posicao[i][1]+=deslocamento[i][1];<br>\n<br>\n		//atualiza exibicao do oponente<br>\n		document.getElementById('oponent'+i).style.top=parseInt(posicao[i][0]-tamanho[i]/2)+"px";<br>\n		document.getElementById('oponent'+i).style.left=parseInt(posicao[i][1]-tamanho[i]/2)+"px";<br>\n<br>\n		//colision detect<br>\n		if(<br>\n			posicao[i][0]-terry[0]>-159&& //cima<br>\n			posicao[i][0]-terry[0]&lt;tamanho[i]/2&& //baixo<br>\n			posicao[i][1]-terry[1]>-165&& //esquerda<br>\n			posicao[i][1]-terry[1]&lt;(tamanho[i]/2)-51 //direita<br>\n		)colisao=true;<br>\n	}<br>\n<br>\n	//verifica se precisa atualizar posicao do terry na tela<br>\n	if(keys[0]&&terry[1]>140)terry[1]-=10;<br>\n	if(keys[1]&&terry[0]>110)terry[0]-=10;<br>\n	if(keys[2]&&terry[1]&lt;710)terry[1]+=10;<br>\n	if(keys[3]&&terry[0]&lt;640)terry[0]+=10;<br>\n<br>\n	//redesenha o terry na tela<br>\n	document.getElementById('terry').style.top=parseInt(terry[0]-128)+"px";<br>\n	document.getElementById('terry').style.left=parseInt(terry[1]-148)+"px";<br>\n<br>\n	if(colisao)location.reload(); //gameover<br>\n	else setTimeout("gameLoop()",10); //chama/invoca a funcao gameLoop depois de um 'delay' de 10 milissegundos<br>\n}<br>\ngameLoop();</code></pre>\n`,
 `<h2>Experimente o Game</h2>Baixe o jogo <a href=res/19/Everywhere.zip>Everywhere</a> e diverta-se por alguns minutos.\n`];
 etapas[20]=[`<h2>Empurrador de Caixas</h2>Essa página mostra uma maneira de programar um joguinho simples e divertido. Um joguinho casual que entretem por alguns momentos.\n`,
-`<h2>Poly</h2>O <a href=https://baideruls.github.io/Poly>software Poly</a> coloca o computador em modo tela-cheia e possibilita o desenvolviemnto de games.\n`,
+`<h2>Poly</h2>O <a href=https://baideruls.github.io/Poly>software Poly</a> coloca o computador em modo tela-cheia e possibilita o desenvolvimento de games.\n`,
 `<h2>Colocando o Joe na Tela</h2>Para começar use uma função para exibir um quadrado no centro da tela.\n`,
 `<h2>Movimentação</h2>Com as teclas direcionais o quadrado Joe muda de posição em uma grid.\n`,
 `<h2>Paredes</h2>Um array de coordenadas de cada espaço que será barreira para nosso personagem.<br>Um código simples deve ser suficiente para que não se atravesse as paredes do cenário.<pre><code class="language-c">#include "poly/poly.h"\n\nint joex=6;\nint joey=3;\n\nint paredes[34][2]={{8,2},{9,2},{10,2},{11,2},{11,3},{11,4},{11,5},{10,5},{9,5},{8,5},{7,5},{9,6},{9,7},{9,8},{8,8},{7,8},{6,8},{5,8},{4,8},{4,7},{4,6},{4,5},{3,5},{2,5},{2,4},{2,3},{2,2},{3,2},{4,2},{4,1},{5,1},{6,1},{7,1},{8,1}};\n\nvoid desenhaquadrado(int m,int n){\n	int background[8]={\n	(m*20)+2,(n*20)+12,\n	(m*20)+19,(n*20)+12,\n	(m*20)+19,(n*20)+28,\n	(m*20)+2,(n*20)+28};\n	fillpoly(background,4);\n}\n\nint last=0;\n\nint main(){\n	setvideomode(); //inicia modo grafico\n	while(!keystate(KEY_ESCAPE)){\n\n		if(last==0&&(keystate(KEY_LEFT)||keystate(KEY_UP)||keystate(KEY_RIGHT)||keystate(KEY_DOWN))){\n			int paredeatras=-1;\n			if(keystate(KEY_UP))\n			{	for(int x=0;x&lt;34;x++)if(paredes[x][0]==joex&&paredes[x][1]==joey-1)paredeatras=x;\n				if(paredeatras==-1)joey--;\n			}\n			if(keystate(KEY_DOWN))\n			{	for(int x=0;x&lt;34;x++)if(paredes[x][0]==joex&&paredes[x][1]==joey+1)paredeatras=x;\n				if(paredeatras==-1)joey++;\n			}\n			if(keystate(KEY_LEFT))\n			{	for(int x=0;x&lt;34;x++)if(paredes[x][0]==joex-1&&paredes[x][1]==joey)paredeatras=x;\n				if(paredeatras==-1)joex--;\n			}\n			if(keystate(KEY_RIGHT))\n			{	for(int x=0;x&lt;34;x++)if(paredes[x][0]==joex+1&&paredes[x][1]==joey)paredeatras=x;\n				if(paredeatras==-1)joex++;\n			}\n			last=4;\n		}\n		else if(last>0)last--;\n\n		setcolor(0);\n		for(int c=0;c&lt;15;c++)for(int d=0;d&lt;9;d++)desenhaquadrado(c,d);\n		setcolor(1);\n		for(int c=0;c&lt;34;c++)desenhaquadrado(paredes[c][0],paredes[c][1]);\n		setcolor(2);\n		desenhaquadrado(joex,joey);\n\n		sleep(20); //delay de 20 milissegndos\n		waitvbl(); //processamentos da biblioteca poly\n	}\n	return 0;\n}</code></pre>\n`,
@@ -272,58 +336,9 @@ etapas[20]=[`<h2>Empurrador de Caixas</h2>Essa página mostra uma maneira de pro
 `<h2>Buracos</h2>Um array de coordenadas os buracos que devem ser ocupados pelas caixas.\n`,
 `<h2>Experimente o Game</h2>Baixe o jogo <a href=res/20/push.rar>push.rar</a> e resolva os casos disponibilizados.\n`,
 `<h2>Source Completo</h2><pre><code class="language-c">#include "poly/poly.h"\n\nint fase=0;\n\nint inicios[6][2]={{5,5},{10,4},{8,6},{4,4},{7,4},{2,6}};\nint paddings[6][2]={{2,-2},{0,0},{2,-1},{1,-1},{1,-3},{2,-3}};\nint joex;\nint joey;\n\nint qtdburacos;\nint lenghtburacos[6]={4,6,6,3,6,6};\nint buracos[8][2];\n\nint qtdparedes;\nint lenghtparedes[6]={26,34,36,24,33,34};\nint paredes[40][2];\n\nint caixas[8][2];\n\nvoid init(){\n	joex=inicios[fase][0];\n	joey=inicios[fase][1];\n\n	qtdburacos=lenghtburacos[fase];\n	for(int a=0;a&lt;8;a++)buracos[a][0]=-1;\n	for(int a=0;a&lt;8;a++)buracos[a][1]=-1;\n	if(fase==0){\n		int arrayburacos[4][2]={{5,3},{7,5},{3,6},{5,8}};\n		for(int a=0;a&lt;lenghtburacos[fase];a++)buracos[a][0]=arrayburacos[a][0];\n		for(int a=0;a&lt;lenghtburacos[fase];a++)buracos[a][1]=arrayburacos[a][1];\n	}\n	if(fase==1){\n		int arrayburacos[6][2]={{8,7},{7,7},{6,7},{5,7},{7,6},{8,6}};\n		for(int a=0;a&lt;lenghtburacos[fase];a++)buracos[a][0]=arrayburacos[a][0];\n		for(int a=0;a&lt;lenghtburacos[fase];a++)buracos[a][1]=arrayburacos[a][1];\n	}\n	if(fase==2){\n		int arrayburacos[6][2]={{3,5},{3,6},{3,7},{8,3},{8,4},{8,5}};\n		for(int a=0;a&lt;lenghtburacos[fase];a++)buracos[a][0]=arrayburacos[a][0];\n		for(int a=0;a&lt;lenghtburacos[fase];a++)buracos[a][1]=arrayburacos[a][1];\n	}\n	if(fase==3){\n		int arrayburacos[3][2]={{6,3},{7,4},{6,6}};\n		for(int a=0;a&lt;lenghtburacos[fase];a++)buracos[a][0]=arrayburacos[a][0];\n		for(int a=0;a&lt;lenghtburacos[fase];a++)buracos[a][1]=arrayburacos[a][1];\n	}\n	if(fase==4){\n		int arrayburacos[6][2]={{5,8},{6,7},{6,9},{7,8},{8,9},{9,8}};\n		for(int a=0;a&lt;lenghtburacos[fase];a++)buracos[a][0]=arrayburacos[a][0];\n		for(int a=0;a&lt;lenghtburacos[fase];a++)buracos[a][1]=arrayburacos[a][1];\n	}\n	if(fase==5){\n		int arrayburacos[6][2]={{4,6},{4,7},{5,6},{5,7},{6,6},{6,7}};\n		for(int a=0;a&lt;lenghtburacos[fase];a++)buracos[a][0]=arrayburacos[a][0];\n		for(int a=0;a&lt;lenghtburacos[fase];a++)buracos[a][1]=arrayburacos[a][1];\n	}\n	\n	qtdparedes=lenghtparedes[fase];\n	for(int a=0;a&lt;40;a++)paredes[a][0]=-1;\n	for(int a=0;a&lt;40;a++)paredes[a][1]=-1;\n	if(fase==0){\n		int arrayparedes[26][2]={{4,2},{5,2},{6,2},{6,3},{6,4},{7,4},{8,4},{8,5},{8,6},{7,6},{6,6},{6,7},{6,8},{6,9},{5,9},{4,9},{4,8},{4,7},{3,7},{2,7},{2,6},{2,5},{3,5},{4,5},{4,4},{4,3}};\n		for(int a=0;a&lt;lenghtparedes[fase];a++)paredes[a][0]=arrayparedes[a][0];\n		for(int a=0;a&lt;lenghtparedes[fase];a++)paredes[a][1]=arrayparedes[a][1];\n	}\n	if(fase==1){\n		int arrayparedes[34][2]={{8,2},{9,2},{10,2},{11,2},{11,3},{11,4},{11,5},{10,5},{9,5},{8,5},{7,5},{9,6},{9,7},{9,8},{8,8},{7,8},{6,8},{5,8},{4,8},{4,7},{4,6},{4,5},{3,5},{2,5},{2,4},{2,3},{2,2},{3,2},{4,2},{4,1},{5,1},{6,1},{7,1},{8,1}};\n		for(int a=0;a&lt;lenghtparedes[fase];a++)paredes[a][0]=arrayparedes[a][0];\n		for(int a=0;a&lt;lenghtparedes[fase];a++)paredes[a][1]=arrayparedes[a][1];\n	}\n	if(fase==2){\n		int arrayparedes[36][2]={{3,2},{4,2},{5,2},{6,2},{7,2},{8,2},{9,2},{10,2},{10,3},{10,4},{10,5},{9,5},{9,6},{9,7},{8,7},{7,7},{6,7},{6,8},{5,8},{4,8},{3,8},{2,8},{1,8},{0,8},{0,7},{0,6},{0,5},{0,4},{0,3},{1,3},{2,3},{3,3},{4,5},{5,5},{6,5},{7,5}};\n		for(int a=0;a&lt;lenghtparedes[fase];a++)paredes[a][0]=arrayparedes[a][0];\n		for(int a=0;a&lt;lenghtparedes[fase];a++)paredes[a][1]=arrayparedes[a][1];\n	}\n	if(fase==3){\n		int arrayparedes[24][2]={{3,2},{4,2},{5,2},{6,2},{7,2},{8,2},{8,3},{8,4},{8,5},{8,6},{8,7},{8,8},{7,8},{6,8},{5,8},{4,8},{3,8},{3,7},{3,6},{3,5},{3,4},{3,3},{5,4},{5,6}};\n		for(int a=0;a&lt;lenghtparedes[fase];a++)paredes[a][0]=arrayparedes[a][0];\n		for(int a=0;a&lt;lenghtparedes[fase];a++)paredes[a][1]=arrayparedes[a][1];\n	}\n	if(fase==4){\n		int arrayparedes[33][2]={{5,3},{6,3},{7,3},{8,3},{9,3},{9,4},{9,5},{9,6},{9,7},{10,7},{10,8},{10,9},{9,9},{9,10},{8,10},{7,10},{6,10},{5,10},{4,10},{3,10},{2,10},{2,9},{2,8},{2,7},{2,6},{3,6},{4,6},{5,6},{5,5},{5,4},{7,7},{5,9},{7,9}};\n		for(int a=0;a&lt;lenghtparedes[fase];a++)paredes[a][0]=arrayparedes[a][0];\n		for(int a=0;a&lt;lenghtparedes[fase];a++)paredes[a][1]=arrayparedes[a][1];\n	}\n	if(fase==5){\n		int arrayparedes[34][2]={{4,3},{5,3},{6,3},{7,3},{8,3},{8,4},{9,4},{9,5},{9,6},{9,7},{9,8},{9,9},{8,9},{7,9},{6,9},{6,10},{5,10},{4,10},{3,10},{2,10},{2,9},{1,9},{1,8},{1,7},{1,6},{1,5},{1,4},{2,4},{3,4},{4,4},{3,6},{3,7},{7,6},{7,7}};\n		for(int a=0;a&lt;lenghtparedes[fase];a++)paredes[a][0]=arrayparedes[a][0];\n		for(int a=0;a&lt;lenghtparedes[fase];a++)paredes[a][1]=arrayparedes[a][1];\n	}\n	\n	for(int a=0;a&lt;8;a++)caixas[a][0]=-1;\n	for(int a=0;a&lt;8;a++)caixas[a][1]=-1;\n	if(fase==0){\n		int arraycaixas[4][2]={{5,4},{6,5},{5,6},{4,6}};\n		for(int a=0;a&lt;lenghtburacos[fase];a++)caixas[a][0]=arraycaixas[a][0];\n		for(int a=0;a&lt;lenghtburacos[fase];a++)caixas[a][1]=arraycaixas[a][1];\n	}\n	if(fase==1){\n		int arraycaixas[6][2]={{8,3},{8,4},{6,5},{5,5},{6,3},{4,4}};\n		for(int a=0;a&lt;lenghtburacos[fase];a++)caixas[a][0]=arraycaixas[a][0];\n		for(int a=0;a&lt;lenghtburacos[fase];a++)caixas[a][1]=arraycaixas[a][1];\n	}\n	if(fase==2){\n		int arraycaixas[6][2]={{2,6},{3,4},{4,6},{5,4},{6,6},{7,4}};\n		for(int a=0;a&lt;lenghtburacos[fase];a++)caixas[a][0]=arraycaixas[a][0];\n		for(int a=0;a&lt;lenghtburacos[fase];a++)caixas[a][1]=arraycaixas[a][1];\n	}\n	if(fase==3){\n		int arraycaixas[3][2]={{7,4},{6,5},{6,6}};\n		for(int a=0;a&lt;lenghtburacos[fase];a++)caixas[a][0]=arraycaixas[a][0];\n		for(int a=0;a&lt;lenghtburacos[fase];a++)caixas[a][1]=arraycaixas[a][1];\n	}\n	if(fase==4){\n		int arraycaixas[6][2]={{4,8},{6,5},{6,8},{7,5},{8,5},{8,7}};\n		for(int a=0;a&lt;lenghtburacos[fase];a++)caixas[a][0]=arraycaixas[a][0];\n		for(int a=0;a&lt;lenghtburacos[fase];a++)caixas[a][1]=arraycaixas[a][1];\n	}\n	if(fase==5){\n		int arraycaixas[6][2]={{3,5},{5,5},{5,6},{5,7},{5,8},{7,8}};\n		for(int a=0;a&lt;lenghtburacos[fase];a++)caixas[a][0]=arraycaixas[a][0];\n		for(int a=0;a&lt;lenghtburacos[fase];a++)caixas[a][1]=arraycaixas[a][1];\n	}\n}\n\nvoid desenhaquadrado(int sel){\n	int m=sel%15,n=sel/15;\n	int background[8]={\n	(m*20)+2,(n*20)+10,\n	(m*20)+19,(n*20)+10,\n	(m*20)+19,(n*20)+30,\n	(m*20)+2,(n*20)+30};\n	fillpoly(background,4);\n}\n\nvoid desenhaburacos(int m,int n){\n	m=m+paddings[fase][0];\n	n=n+paddings[fase][1];\n	int background[8]={\n	(m*20)+2,(n*20)+12,\n	(m*20)+19,(n*20)+12,\n	(m*20)+19,(n*20)+28,\n	(m*20)+2,(n*20)+28};\n	fillpoly(background,4);\n}\n\nvoid desenhaparedes(int m,int n){\n	m=m+paddings[fase][0];\n	n=n+paddings[fase][1];\n	int background[8]={\n	(m*20)+2,(n*20)+12,\n	(m*20)+19,(n*20)+12,\n	(m*20)+19,(n*20)+28,\n	(m*20)+2,(n*20)+28};\n	fillpoly(background,4);\n}\n\nvoid desenhacaixas(int m,int n){\n	m=m+paddings[fase][0];\n	n=n+paddings[fase][1];\n	int background[8]={\n	(m*20)+2,(n*20)+12,\n	(m*20)+19,(n*20)+12,\n	(m*20)+19,(n*20)+28,\n	(m*20)+2,(n*20)+28};\n	fillpoly(background,4);\n}\n\nvoid desenhajoe(){\n	int m=joex;\n	int n=joey;\n	m=m+paddings[fase][0];\n	n=n+paddings[fase][1];\n	int head[8] = {\n		(m*20)+8,11+(n*20),\n		(m*20)+12,11+(n*20),\n		(m*20)+12,14+(n*20),\n		(m*20)+8,14+(n*20)};\n	fillpoly(head,4); //cabeça do Joe\n	int arms[8] = {\n		(m*20)+4,15+(n*20),\n		(m*20)+16,15+(n*20),\n		(m*20)+16,17+(n*20),\n		(m*20)+4,17+(n*20)};\n	fillpoly(arms,4); //braços do Joe\n	int body[8] = {\n		(m*20)+9,17+(n*20),\n		(m*20)+12,17+(n*20),\n		(m*20)+12,22+(n*20),\n		(m*20)+9,22+(n*20)};\n	fillpoly(body,4); //tronco\n	int rightLeg[8] = {\n		(m*20)+8,22+(n*20),\n		(m*20)+10,22+(n*20),\n		(m*20)+10,29+(n*20),\n		(m*20)+8,29+(n*20)};\n	fillpoly(rightLeg,4);\n	int leftLeg[8] = {\n		(m*20)+11,22+(n*20),\n		(m*20)+13,22+(n*20),\n		(m*20)+13,29+(n*20),\n		(m*20)+11,29+(n*20)};\n	fillpoly(leftLeg,4);\n}\n\nint last=0;\n\nint main(){\n	setvideomode(); //inicia modo grafico\n	init();\n	while(!keystate(KEY_ESCAPE)){ //o jogo sempre continua while/enquanto o user não pressiona a tecla ESC/escape\n		if(keystate(KEY_1)){fase=0;init();}\n		if(keystate(KEY_2)){fase=1;init();}\n		if(keystate(KEY_3)){fase=2;init();}\n		if(keystate(KEY_4)){fase=3;init();}\n		if(keystate(KEY_5)){fase=4;init();}\n		if(keystate(KEY_6)){fase=5;init();}\n\n		if(last==0&&(keystate(KEY_LEFT)||keystate(KEY_UP)||keystate(KEY_RIGHT)||keystate(KEY_DOWN))){\n			int nadaatras=-1,caixaatras=-1,nadaatrasatras=-1;\n			if(keystate(KEY_UP))\n			{	for(int x=0;x&lt;qtdparedes;x++)if(paredes[x][0]==joex&&paredes[x][1]==joey-1)nadaatras=x;\n				for(int x=0;x&lt;qtdburacos;x++)if(caixas[x][0]==joex&&caixas[x][1]==joey-1)caixaatras=x;\n				if(nadaatras==-1&&caixaatras==-1)joey--;\n				else if(nadaatras==-1)\n				{	for(int x=0;x&lt;qtdparedes;x++)if(paredes[x][0]==joex&&paredes[x][1]==joey-2)nadaatrasatras=x;\n					for(int x=0;x&lt;qtdburacos;x++)if(caixas[x][0]==joex&&caixas[x][1]==joey-2)nadaatrasatras=x;\n					if(nadaatrasatras==-1)\n					{	joey--;\n						caixas[caixaatras][1]--;\n					}\n				}\n			}\n			if(keystate(KEY_DOWN))\n			{	for(int x=0;x&lt;qtdparedes;x++)if(paredes[x][0]==joex&&paredes[x][1]==joey+1)nadaatras=x;\n				for(int x=0;x&lt;qtdburacos;x++)if(caixas[x][0]==joex&&caixas[x][1]==joey+1)caixaatras=x;\n				if(nadaatras==-1&&caixaatras==-1)joey++;\n				else if(nadaatras==-1)\n				{	for(int x=0;x&lt;qtdparedes;x++)if(paredes[x][0]==joex&&paredes[x][1]==joey+2)nadaatrasatras=x;\n					for(int x=0;x&lt;qtdburacos;x++)if(caixas[x][0]==joex&&caixas[x][1]==joey+2)nadaatrasatras=x;\n					if(nadaatrasatras==-1)\n					{	joey++;\n						caixas[caixaatras][1]++;\n					}\n				}\n			}\n			if(keystate(KEY_LEFT))\n			{	for(int x=0;x&lt;qtdparedes;x++)if(paredes[x][0]==joex-1&&paredes[x][1]==joey)nadaatras=x;\n				for(int x=0;x&lt;qtdburacos;x++)if(caixas[x][0]==joex-1&&caixas[x][1]==joey)caixaatras=x;\n				if(nadaatras==-1&&caixaatras==-1)joex--;\n				else if(nadaatras==-1)\n				{	for(int x=0;x&lt;qtdparedes;x++)if(paredes[x][0]==joex-2&&paredes[x][1]==joey)nadaatrasatras=x;\n					for(int x=0;x&lt;qtdburacos;x++)if(caixas[x][0]==joex-2&&caixas[x][1]==joey)nadaatrasatras=x;\n					if(nadaatrasatras==-1)\n					{	joex--;\n						caixas[caixaatras][0]--;\n					}\n				}\n			}\n			if(keystate(KEY_RIGHT))\n			{	for(int x=0;x&lt;qtdparedes;x++)if(paredes[x][0]==joex+1&&paredes[x][1]==joey)nadaatras=x;\n				for(int x=0;x&lt;qtdburacos;x++)if(caixas[x][0]==joex+1&&caixas[x][1]==joey)caixaatras=x;\n				if(nadaatras==-1&&caixaatras==-1)joex++;\n				else if(nadaatras==-1)\n				{	for(int x=0;x&lt;qtdparedes;x++)if(paredes[x][0]==joex+2&&paredes[x][1]==joey)nadaatrasatras=x;\n					for(int x=0;x&lt;qtdburacos;x++)if(caixas[x][0]==joex+2&&caixas[x][1]==joey)nadaatrasatras=x;\n					if(nadaatrasatras==-1)\n					{	joex++;\n						caixas[caixaatras][0]++;\n					}\n				}\n			}\n			last=4;\n		}\n		else if(last>0)last--;\n\n		setcolor(0);\n		for(int c=0;c&lt;135;c++)desenhaquadrado(c);\n		setcolor(1);\n		for(int c=0;c&lt;qtdparedes;c++)desenhaparedes(paredes[c][0],paredes[c][1]);\n		setcolor(4);\n		for(int c=0;c&lt;qtdburacos;c++)desenhaburacos(buracos[c][0],buracos[c][1]);\n		setcolor(3);\n		for(int c=0;c&lt;qtdburacos;c++)desenhacaixas(caixas[c][0],caixas[c][1]);\n		setcolor(2);\n		desenhajoe();\n\n		setcolor(1);\n		blitInt(1,0,5);\n		blitInt(2,0,20);\n		blitInt(3,0,35);\n		blitInt(4,0,50);\n		blitInt(5,0,65);\n		blitInt(6,0,80);\n\n		setcolor(4);\n		blitInt(fase+1,0,(fase*15)+5);\n\n		sleep(20); //delay de 20 milissegndos\n		waitvbl(); //processamentos da biblioteca poly\n	}\n	return 0;\n}</code></pre>`];
-			for (x = 0; x < etapas[tutorial].length; x++)
-				document.getElementsByTagName("main")[0].innerHTML += etapas[tutorial][x].replace("<h2>", "<h2>" + (x * 10 + parseInt(Math.random() * 10)) + "." + parseInt(Math.random() * 10) + " - ") + "<br><br>";
-			document.getElementsByTagName("main")[0].innerHTML += "<h2>" + (etapas[tutorial].length * 10 + parseInt(Math.random() * 10)) + "." + parseInt(Math.random() * 10) + " - Deixe Comentários</h2><div id=disqus_thread></div>";
-			disqus_config=function () {
-				this.page.url=location.href;
-				this.page.identifier=location.href;
-			};
-			s=document.createElement('script');
-			s.src='https://tutoriais-3.disqus.com/embed.js';
-			s.setAttribute('data-timestamp', +new Date());
-			(document.head||document.body).appendChild(s);
-		} else {
-			procedimentos = [
-["Joe Jumper","Desktop","C","Iniciantes","Tutorial programar Jogo com a linguagem C","Programando um jogo com a linguagem C. Comandos setvideomode() dos-like dos.h dos.c sleep() setcolor()","d"],
-["Zombie Waves","Mobile","Java","Intermediários","Tutorial Jogo de Celular","Como programar um jogo para android com a linguagem Java. Comandos 'extends View()' onTouchEvent() onDraw() onSizeChanged() TimerTask()","m"],
-["Xadrez","Browser","Javascript","Avançados","Tutorial Xadrez em Javascript","Como programar um jogo de xadrez com a linguagem javascript","w"],
-["Database","Servidores","Php","Intermediários","Tutorial Banco de Dados","Como iniciar com php e mysql. Comandos básicos de php. Criando uma base de dados mysql com xampp","w"],
-["Campo Minado","Mobile","Java","Intermediários","Tutorial Jogo de Celular","Como programar um jogo de celular. Programação javascript e java. Usando uma webview","m"],
-["Jogo de Corrida","Desktop","Javascript","Avançados","Tutorial Jogo em Javascript","Como programar um jogo com javascript. Um jogo de corrida no canvas. Como usar setTimeout e context.rotate()","d"],
-["Stylish-Gen","Front End","CSS - JS","Iniciantes","Tutorial Stylish-Gen","Tutorial que mostra como programar uma página simples que gera estilos aleatórios para frases que o usuário digita","w"],
-["Breakout","Browser","Javascript","Intermediários","Tutorial Breakout Js","Tutorial programação javascript. Jogo breakout. Arrays. Jogo. Como criar um joguinho em javascript com a tag canvas","w"],
-["Square Motor","Mobile","Kotlin","Avançados","Tutorial Square Motor","Tutorial sobre programação mobile android. Um jogo de corrida programado com a linguagem kotlin","m"],
-["Site Simples","Web","HTML","Iniciantes","Tutorial como criar um site","Tutorial sobre como escrever código html. Criando uma simples página","w"],
-["Endless Runner","Desktop","Python","Iniciantes","Tutorial Endless Runner","Tutorial sobre como programar um joguinho com python. Um joguinho simples","d"],
-["Snake","Desktop","C","Avançados","Tutorial jogo Cobrinha","Como programar o jogo da cobrinha com a linguagem C usando o Dev-C++","d"],
-["Rocket Attack","Desktop","hta","Avançados","Tutorial desenvolvimento de um joguinho de corrida de Naves","Como programar um jogo para windows. Jogo de corrida com javascript. Arquivo no formato hta","d"],
-["Screenshot","Mobile","Java","Intermediários","Tutorial Screenshot Android","Como desenvolver um aplicativo que tira screenshot e salva com png. Programação Android com java","m"],
-["Shuffle Faces","Desktop","hta","Intermediários","Tutorial joguinho de encontrar","Programação de joguinho para windows. Arquivo executável com código javascript. Como programar um arquivo hta","d"],
-["Harry Leap","Mobile","Java","Intermediários","Como programar um jogo utilizando o celular","Tutorial que mostra como fazer um game programando pelo celular","m"],
-["Números Primos","Web","Javascript","Iniciantes","Calculando números primos com javascript","Tutorial sobre programação javascript. Como calcular números primos","w"],
-["Armazenamento","Desktop","Textos e Imagens","Iniciantes","Como o computador armazena","Explicação detalhada de como os computadores armazenam informações","d"],
-["Site Instalável","Desktop","PWA","Iniciantes","Progressive Web Application","Como programar e publicar uma PWA","d"],
-["Everywhere","Desktop","hta","Intermediários","Jogo de desviar dos objetos que aparecem na tela","Usando javascript html e css para programar um joguinho que funciona em computadores com windows","d"],
-["Empurrador de Caixas","Desktop","C","Intermediários","Tutorial sobre como programar no software Poly","Comandos e conceitos básicos sobre desenvolvimento de games","d"]];
-			document.getElementsByTagName("main")[0].innerHTML += "<small onclick=\"mostracategoria('w');\">web</small><small onclick=\"mostracategoria('d');\">desktop</small><small onclick=\"mostracategoria('m');\">mobile</small><br>";
-			for (x = 0; x < procedimentos.length; x++) if (x != 17)
-				document.getElementsByTagName("main")[0].innerHTML +=	licao(x);
-			document.getElementsByTagName("main")[0].innerHTML += "<h3>Informação Adicional Extra</h3>";
-				document.getElementsByTagName("main")[0].innerHTML +=	licao(17);
-			document.getElementsByTagName("main")[0].innerHTML += "<a href=https://baideruls.github.io/Perceptron target=_blank><h2>Tutorial Externo</h2> * Como programar uma i.a. desde o zero<div class=subtitulo>Um tutorial sobre machine learning onde conceitos chaves da inteligência artificial são apresentados.</div></a><br>";
-			document.getElementsByTagName("main")[0].innerHTML += "<h3>Advertising</h3>";
-			document.getElementsByTagName("main")[0].innerHTML += "<iframe src=https://baideruls.github.io/baiderulsads/baiderulsads.html style='width:326px;height:306px;border:none;'></iframe>";
-			function licao(x){
-				return "<div class=" + procedimentos[x][6] + "><a href=index.html?tutorial=" + x + "><h2>" + procedimentos[x][0] + "</h2> * " + procedimentos[x][4] + "<div class=subtitulo>" + procedimentos[x][5] + "</div><b>Para " + procedimentos[x][3] + "</b> | Linguagem " + procedimentos[x][2] + " | <b>" + procedimentos[x][1] + "</b></a><br><br></div>";
-		}
-			function mostracategoria(c) {
-				for (x = 0; x < document.getElementsByClassName("d").length; x++) document.getElementsByClassName("d")[x].style.display = "none";
-				for (x = 0; x < document.getElementsByClassName("w").length; x++) document.getElementsByClassName("w")[x].style.display = "none";
-				for (x = 0; x < document.getElementsByClassName("m").length; x++) document.getElementsByClassName("m")[x].style.display = "none";
-				for (x = 0; x < document.getElementsByClassName(c).length; x++) document.getElementsByClassName(c)[x].style.display = "";
-			}
-		}
-	</script>
-	<script src="prism.js"></script>
+// --- db.js
+
+main();
+</script>
+<script src="prism.js"></script>
 </html>
